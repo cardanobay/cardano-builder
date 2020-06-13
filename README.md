@@ -84,9 +84,10 @@ Available options:
 ## What is in this repo ?
 
 In this repository, you will find
-* a [Dockerfile] (https://raw.githubusercontent.com/cardanobay/cardano-builder/master/Dockerfile). Contains the instructions to build the cardano-builder container
-* [Building Script] (https://raw.githubusercontent.com/cardanobay/cardano-builder/master/build-image). A helper script to automatically build the container
-* [Static binary builder] (https://raw.githubusercontent.com/cardanobay/cardano-builder/master/builder), which contains all the instructions for build the fully static binary with musl-libc
+* [Dockerfile](https://raw.githubusercontent.com/cardanobay/cardano-builder/master/Dockerfile). Contains the instructions to build the cardano-builder container
+* [Building Script](https://raw.githubusercontent.com/cardanobay/cardano-builder/master/scripts/build-image). A helper script to automatically build the container
+* [Static binary builder](https://raw.githubusercontent.com/cardanobay/cardano-builder/master/builder), which contains all the instructions to build the fully static binary with musl-libc
+  * usage : `scripts/build-image --builder docker`
 * This README ^_^
 
 ## Contact
