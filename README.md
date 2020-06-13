@@ -2,7 +2,7 @@
 
 ## Statica vs Dynamic
 
-When you compile the cardano-cli and cardano-node binaries on standard distribution (like RHEL/Debian etc.), they are compiled, by default, against glibc. As a result, the produced binaries cannot become "fully static". They are instead, "dynamically" linked to some mandatory libraries. You can see theses dynamic links by issuing two commands
+When you compile the cardano-cli and cardano-node binaries on standard distribution (like RHEL/Debian etc.), they are compiled, by default, with glibc. As a result, the produced binaries cannot become "fully static". They are instead, "dynamically" linked to some mandatory libraries. You can see theses dynamic links by issuing two commands
 
 * `ldd cardano-node`
 ```
@@ -28,7 +28,7 @@ There are four problems with this approach.
 3) It embed a lot of unnecessary data to the file system (because often, you install hundred of MB of package just to have a small .so library). Not a good idea if you want to run your node, let's say, on docker.
 4) The binaries are not portable. It means, you have to rebuild (or download) a pre-compiled binary for each operating system and version you want to use.
 
-A contrario, we call "static" a binary that contains all required library in itself. You can then copy this binary on every system you like, wihout installing one dependency. The same binary can run on Debian, Centos, Redhat, Fedora, Ubuntu, in every version, without needing to install a single additional package.
+A contrario, we call "static" a binary that contains all required library in itself. It is possible to have a fully static binary, by compiling the code with [musl-libc](https://wiki.musl-libc.org/  "musl-libc"). You can then copy the binary on every linux distribution, wihout installing any dependencies. The same binary can run on Debian, Centos, Redhat, Fedora, Ubuntu etc. in every version, without needing to install a single additional package.
 
 When you analyze a static binary, this is what you get :
 
