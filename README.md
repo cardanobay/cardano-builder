@@ -64,6 +64,8 @@ podman run --rm --name cardano-builder \
 ```
 
 ## Usage
+
+```
 Usage: /usr/local/bin/builder build --cardano_version <version> [OPTIONS]
   Build the Cardano Node container.
 
@@ -77,3 +79,4 @@ Available options:
   --os_arch           The operating system architecture [Default: x86_64]
   --help              Display this message
  * = mandatory options
+```
