@@ -1,6 +1,6 @@
 # The Cardano Static Binaries Builder
 
-## Statically vs Dynamic
+## Statica vs Dynamic
 
 When you compile the cardano-cli and cardano-node binaries on standard distribution (like RHEL/Debian etc.), they are compiled, by default, against glibc. As a result, the produced binaries cannot become "fully static". They are instead, "dynamically" linked to some mandatory libraries. You can see theses dynamic links by issuing two commands
 
