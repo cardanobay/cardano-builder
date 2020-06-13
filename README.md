@@ -1,8 +1,8 @@
 # The Cardano Static Binaries Builder
 
-## Statica vs Dynamic
+## Static vs Dynamic
 
-When you compile the cardano-cli and cardano-node binaries on standard distribution (like RHEL/Debian etc.), they are compiled, by default, with glibc. As a result, the produced binaries cannot become "fully static". They are instead, "dynamically" linked to some mandatory libraries. You can see theses dynamic links by issuing two commands
+When you compile the cardano-cli and cardano-node binaries on standard distribution (like RHEL/Debian etc.), they are compiled, by default, with glibc. As a result, the produced binaries cannot become "fully static". This is a limitation of the library. They are instead, "dynamically" linked to glibc, as well as some other mandatory libraries. You can see theses dynamic links by issuing two commands
 
 * `ldd cardano-node`
 ```
@@ -23,12 +23,12 @@ cardano-node: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically l
 for GNU/Linux 3.2.0, BuildID[sha1]=e6c5d1d3c97588b19dc71aed1b95bd1f156d1c56, with debug_info, not stripped, 
 ```
 There are four problems with this approach.
-1) You must install all required libraries on your system, and on every system, the procedure differs.
+1) You must install all the required libraries on your system, and on each system, the installation and configure procedure differs.
 2) If the system is updated (apt/yum/dnf update), the libraries and cardano binaries could suddenly become incompatible.
-3) It embed a lot of unnecessary data to the file system (because often, you install hundred of MB of package just to have a small .so library). Not a good idea if you want to run your node, let's say, on docker.
+3) It adds a lot of unnecessary data to the file system (because often, you install hundred of MB of package just to have a small .so library). Not a good idea if you want to run a very small node, let's say, on Docker on AWS.
 4) The binaries are not portable. It means, you have to rebuild (or download) a pre-compiled binary for each operating system and version you want to use.
 
-A contrario, we call "static" a binary that contains all required library in itself. It is possible to have a fully static binary, by compiling the code with [musl-libc](https://wiki.musl-libc.org/  "musl-libc"). You can then copy the binary on every linux distribution, wihout installing any dependencies. The same binary can run on Debian, Centos, Redhat, Fedora, Ubuntu etc. in every version, without needing to install a single additional package.
+A contrario, we call "static" a binary that contains all required library in itself. It is possible to have a fully static binary, by compiling the cardano source code with [musl-libc](https://wiki.musl-libc.org/  "musl-libc"). You can then copy the compiled binaries on every linux distribution, wihout installing any dependencies. The same binary can run on Debian, Centos, Redhat, Fedora, Ubuntu etc. in every version, without needing to install a single additional package.
 
 When you analyze a static binary, this is what you get :
 
@@ -43,15 +43,15 @@ When you analyze a static binary, this is what you get :
 cardano-node: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, with debug_info, not stripped
 ```
 
-The real advantage is... you can add it to a very very small docker image, which take near to zero space and consume near to zero memory ! If you are interested by such small docker images, you can find more informations here : [The Lightweight & Secure Cardano Node Container](https://github.com/cardanobay/cardano-node "The Lightweight & Secure Cardano Node Container"), [The Easy Peasy Cardano CLI](https://github.com/cardanobay/cardano-cli "The Easy Peasy Cardano CLI") 
+The real advantage is... you can add it to a very very small docker image, which consumes near to zero excessive disk space or memory ! If you are interested by such small docker images you can find more informations here : [The Lightweight & Secure Cardano Node Container](https://github.com/cardanobay/cardano-node "The Lightweight & Secure Cardano Node Container"), [The Easy Peasy Cardano CLI](https://github.com/cardanobay/cardano-cli "The Easy Peasy Cardano CLI") 
 
 ## Build Static Binaries
 
-You can download the pre-compiled static binaries with the links above, or you can of course build your own version of the binaries ;) 
+You can download the pre-compiled static binaries, or docker images with the links above, or you can of course build your own version of the binaries ;) 
 
 ### Build example
 
-Note that, in this example, once the builder finished its job, the static binaries (cardano-node & cardano-cli) can be found on the host, in the /tmp directory. You can then use this binary on whatever system (linux) you prefer !
+Note that, in this example, once the builder finished its job, the static binaries (cardano-node & cardano-cli) can be found on the host, in the **/tmp** directory. You can then use theses binaries on whatever system (linux) you prefer, just copy & paste it !
 
 ```
 podman run --rm --name cardano-builder \
