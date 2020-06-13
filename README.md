@@ -49,7 +49,7 @@ The real advantage is... you can add it to a very very small docker image, which
 
 You can download the pre-compiled static binaries with the links above, or you can of course build your own version of the binaries ;) 
 
-## Build example
+### Build example
 
 Note that, in this example, once the builder finished its job, the static binaries (cardano-node & cardano-cli) can be found on the host, in the /tmp directory. You can then use this binary on whatever system (linux) you prefer !
 
@@ -63,7 +63,7 @@ podman run --rm --name cardano-builder \
     --cabal_version 3.2.0.0
 ```
 
-## Usage
+### Usage
 
 ```
 Usage: /usr/local/bin/builder build --cardano_version <version> [OPTIONS]
@@ -80,3 +80,18 @@ Available options:
   --help              Display this message
  * = mandatory options
 ```
+
+## What is in this repo ?
+
+In this repository, you will find
+* a [Dockerfile] (https://raw.githubusercontent.com/cardanobay/cardano-builder/master/Dockerfile). Contains the instructions to build the cardano-builder container
+* [Building Script] (https://raw.githubusercontent.com/cardanobay/cardano-builder/master/build-image). A helper script to automatically build the container
+* [Static binary builder] (https://raw.githubusercontent.com/cardanobay/cardano-builder/master/builder), which contains all the instructions for build the fully static binary with musl-libc
+* This README ^_^
+
+## Contact
+
+Admin email : pascha+cardanobay@protonmail.com \
+Website : https://www.cardanobay.com \
+Docker Hub : https://hub.docker.com/r/cardanobay/cardano-builder \
+Github : https://github.com/cardanobay/cardano-builder
