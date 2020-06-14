@@ -1,0 +1,69 @@
+#!/bin/sh
+
+set -e
+trap 'catch $? $LINENO' EXIT
+
+usage() {
+  echo "Usage: $0 --tag <tag>"
+  echo "  Push a specific version of Cardano Builder container to Docker Hub."
+  echo ""
+  echo "Available options:"
+  echo " *--tag           The cardano-builder container tag [Default: none] [Example: latest, 1.0]"
+  echo "  --agent         Which agent to use to push the container [Default: docker] [docker|buildah]"
+  echo "  --help          Display this message"
+  echo " * = mandatory options"
+  exit 0
+}
+
+catch() {
+  if [ "$1" != "0" ]; then
+    echo "An error has occured, please verify the options"
+    usage
+  fi
+}
+
+help=${help:-false}
+tag=${tag:-}
+agent=${agent:-docker}
+
+while [ $# -gt 0 ]; do
+   if [[ $1 == *"--"* ]]; then
+        param="${1/--/}"
+        declare $param="$2" 2>/dev/null
+   fi
+  shift
+done
+
+if [ "$help" != false ]; then
+  usage
+fi
+
+if [ -z "$tag" ]; then
+  usage
+fi
+
+echo ""
+echo "Verify the options before continuing :"
+echo "tag           : $tag"
+echo "agent         : $agent"
+echo ""
+
+read -n 1 -s -r -p "Press any key to continue"
+echo ""
+
+if [ ! -x "$(command -v ${agent})" ]; then
+  echo "Error: agent '${agent}' not found in \$PATH"
+  exit 1
+fi
+
+echo "Pushing localhost/cardano-builder:${tag} to docker.io/cardanobay/cardano-builder:${tag}"
+
+case "${agent}" in
+   "docker")
+      ${agent} tag "cardano-builder:${tag}"  "cardanobay/cardano-builder:${tag}"
+      ${agent} push "cardanobay/cardano-builder:${tag}"
+      ;;
+   "buildah")
+      ${agent} push "localhost/cardano-builder:${tag}" "docker.io/cardanobay/cardano-builder:${tag}"
+      ;;
+esac

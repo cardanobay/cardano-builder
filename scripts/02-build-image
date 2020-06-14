@@ -5,11 +5,11 @@ set -e
 trap 'catch $? $LINENO' EXIT
 
 usage() {
-  echo "Usage: $0 --builder [docker|buildah]"
+  echo "Usage: $0"
   echo "  Build the Cardano Builder container."
   echo ""
   echo "Available options:"
-  echo " *--builder       Which binary to use to build the container [Default: None] [docker|buildah]"
+  echo "  --builder       Which binary to use to build the container [Default: None] [docker|buildah]"
   echo "  --help          Display this message"
   echo " * = mandatory options"
   exit 0
@@ -23,7 +23,7 @@ catch() {
 }
 
 help=${help:-false}
-builder=${builder:-}
+builder=${builder:-docker}
 
 while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
@@ -34,11 +34,6 @@ while [ $# -gt 0 ]; do
 done
 
 if [ "$help" != false ]; then
-  usage
-fi
-
-if [ ! -x "$(command -v ${builder})" ]; then
-  echo "Error: builder '${builder}' not found in \$PATH"
   usage
 fi
 
@@ -69,10 +64,10 @@ echo "Building image ${tag}..."
 
 case "${builder}" in
    "docker")
-      docker build --tag ${tag} ${build_path}
+      ${builder} build --tag ${tag} ${build_path}
       ;;
    "buildah")
-      buildah bud --tag ${tag} ${build_path}
+      ${builder} bud --tag ${tag} ${build_path}
       ;;
 esac
 
