@@ -49,7 +49,7 @@ When you analyze a static binary, this is what you get :
 cardano-node: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, with debug_info, not stripped
 ```
 
-The real advantage is... you can add it to a very very small docker image, which consumes near to zero excessive disk space or memory ! If you are interested by such small docker images you can find more informations here : [The Lightweight & Secure Cardano Node Container](https://github.com/cardanobay/cardano-node "The Lightweight & Secure Cardano Node Container"), [The Easy Peasy Cardano CLI](https://github.com/cardanobay/cardano-cli "The Easy Peasy Cardano CLI")
+The real advantage is... you can add it to a very very small docker image, which consumes near to zero excessive disk space or memory ! If you are interested by such small docker images you can find more informations here : [The Lightweight & Secure Cardano Node](https://github.com/cardanobay/cardano-node "The Lightweight & Secure Cardano Node"), [The Easy Peasy Cardano CLI](https://github.com/cardanobay/cardano-cli "The Easy Peasy Cardano CLI")
 
 ## Download static binaries
 
