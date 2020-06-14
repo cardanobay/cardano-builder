@@ -8,7 +8,7 @@ usage() {
   echo "  Push a specific version of Cardano Builder container to Docker Hub."
   echo ""
   echo "Available options:"
-  echo " *--tag           The cardano-builder container tag [Default: none] [Example: latest, 1.0]"
+  echo "  --tag*          The cardano-builder container tag [Default: none] [Example: latest, 1.0]"
   echo "  --agent         Which agent to use to push the container [Default: docker] [docker|buildah]"
   echo "  --help          Display this message"
   echo " * = mandatory options"
