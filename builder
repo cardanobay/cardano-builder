@@ -135,5 +135,5 @@ git clone https://github.com/input-output-hk/cardano-node.git . \
 /build/cabal/cabal build all --enable-executable-static
 
 # PUBLISH RELEASES
-cp $(find ./ -type f -name "cardano-node") /release
-cp $(find ./ -type f -name "cardano-cli") /release
+cp -f $(find ./ -type f -name "cardano-node") /release
+cp -f $(find ./ -type f -name "cardano-cli") /release

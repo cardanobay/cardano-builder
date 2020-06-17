@@ -9,7 +9,8 @@ usage() {
   echo "  Build the Cardano Builder container."
   echo ""
   echo "Available options:"
-  echo "  --builder       Which binary to use to build the container [Default: None] [docker|buildah]"
+  echo "  --tag*          The cardano-builder container tag [Default: none] [Example: latest, 1.0]"
+  echo "  --agent         Which agent to use to push the container [Default: docker] [docker|buildah]"
   echo "  --help          Display this message"
   echo " * = mandatory options"
   exit 0
@@ -23,7 +24,8 @@ catch() {
 }
 
 help=${help:-false}
-builder=${builder:-docker}
+tag=${tag:-}
+agent=${agent:-docker}
 
 while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
@@ -37,40 +39,46 @@ if [ "$help" != false ]; then
   usage
 fi
 
-build_path=${PWD}
-if [ ! -d "${build_path}" ]; then
-  echo "Build path ${build_path} doesn't exist"
-  exit 0
+if [ -z "$tag" ]; then
+  usage
 fi
 
+build_path=${PWD}
+
 echo ""
-echo "Verify carefully the options before continuing :"
+echo "Verify the options before continuing :"
 echo ""
-echo "builder       : $builder"
+echo "tag           : $tag"
+echo "agent         : $agent"
 echo "build path    : $build_path"
 echo ""
 
 read -n 1 -s -r -p "Press any key to continue"
 echo ""
 
-tag="cardano-builder:latest"
+if [ ! -d "${build_path}" ]; then
+  echo "Build path ${build_path} doesn't exist"
+  exit 0
+fi
+
+tag="cardano-builder:${tag}"
 
 echo "Cleaning local repository ${tag}..."
 set +e
-${builder} rmi "localhost/${tag}" 2>/dev/null
+${agent} rmi "localhost/${tag}" 2>/dev/null
 set -e
 
 echo "Building image ${tag}..."
 
-case "${builder}" in
+case "${agent}" in
    "docker")
-      ${builder} build --tag ${tag} ${build_path}
+      ${agent} build --tag ${tag} ${build_path}
       ;;
    "buildah")
-      ${builder} bud --tag ${tag} ${build_path}
+      ${agent} bud --tag ${tag} ${build_path}
       ;;
 esac
 
 echo "Image ${tag} built successfully..."
 echo ""
-${builder} images | grep -i "cardano-builder"
+${agent} images | grep -i "cardano-builder"
