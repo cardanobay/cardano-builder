@@ -51,6 +51,8 @@ cardano-node: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically li
 
 The real advantage is... you can add it to a very very small docker image, which consumes near to zero excessive disk space or memory ! If you are interested by such small docker images you can find more informations here : [The Lightweight & Secure Cardano Node](https://github.com/cardanobay/cardano-node "The Lightweight & Secure Cardano Node"), [The Easy Peasy Cardano CLI](https://github.com/cardanobay/cardano-cli "The Easy Peasy Cardano CLI")
 
+!!! Currently, we have not been able to build CABAL with musl-libc on the aarch64 architecture, so it is not possible to compile a fully statically linked for the Rock PI. But you can run a container on aarch64, or build a dynamically linked binary here [The Lightweight & Secure Cardano Node](https://github.com/cardanobay/cardano-node)
+
 ## Download static binaries
 
 You can find the latest version of fully statically linked binaries on our [releases](https://github.com/cardanobay/cardano-node/releases) page.
